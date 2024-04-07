@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+# docker run -d -p 8000:8000
+#   -p 9443:9443
+#   --name portainer
+#   --restart=always
+#   -v /var/run/docker.sock:/var/run/docker.sock
+#   -v portainer_data:/data portainer/portainer-ce:latest
+
+# docker volume create portainer_data
+
+
+####################
+# portainer:
+#   container_name: portainer
+#   restart: always
+#   volumes:
+#     - /var/run/docker.sock:/var/run/docker.sock
+#     - portainer_data:/data portainer/portainer-ce:latest
+#   ports:
+#     - 9443:9443
+####################
+  nginx:
+    container_name: li-nginx
+    build:
+      context: ./app/build/nginx
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    ports:
+      - 8080:80
+    volumes:
+      - ./app/public/html/:/var/www/html/
+
+  php:
+    container_name: li-php
+    build:
+      context: ./app/build/php
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    volumes:
+      - ./app/public/html/:/var/www/html/
+
+  mysql:
+    container_name: li-sql
+    build:
+      context: ./app/build/mysql
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    env_file:
+      - ./app/env/mysql.env
+
+
+networks:
+  app-network:
+    driver: bridge
+
+
+####################
+# volumes:
+#   portainer_data:
+####################
