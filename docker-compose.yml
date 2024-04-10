@@ -7,7 +7,7 @@ services:
       context: ./app/build/fastapi
       dockerfile: Dockerfile
     volumes:
-      - ./app/build/fastapi/src/:/code/src/
+      - ./app/public/fastapi/src:/code/src/
     networks:
       - app-network
     ports:
