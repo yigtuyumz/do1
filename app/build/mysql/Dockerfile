@@ -1,1 +1,6 @@
 FROM mysql:latest
+
+ENV MYSQL_ROOT_PASSWORD="root"
+ENV MYSQL_DATABASE="devdb"
+ENV MYSQL_USER="devuser"
+ENV MYSQL_PASSWORD="devuser"
